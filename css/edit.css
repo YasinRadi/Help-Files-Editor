@@ -1,0 +1,45 @@
+body {
+    font-family: Monaco, 'sans-serif';
+    margin:0 80px 80px 80px;
+}
+
+h1 {
+    text-decoration: underline;
+}
+
+.stepTitle, .nameTitle {
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 3px;
+}
+
+.fieldTitle {
+    font-weight: bold;
+}
+
+input, span {
+    display: block;
+}
+
+div > span {
+    margin-top: 8px;
+}
+
+div > span, div > input, div > textarea {
+    margin-left: 30px;
+}
+
+.addBtn {
+    display: block;
+    margin-left: 45%;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+}
+
+.removeBtn {
+    float: right;
+    width: 15px;
+    height: 15px;
+    margin: 8px 623px 0 0;
+}

@@ -1,0 +1,26 @@
+{
+  "name": "SimpleUI",
+  "version": "1.0.0",
+  "description": "A simple Electron application for creating and editing help files.",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron .",
+    "debug": "electron . --debug"
+  },
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "Yasin Radi",
+  "devDependencies": {
+    "electron": "~1.6.2"
+  },
+  "dependencies": {
+    "electron-debug": "^1.2.0",
+    "electron-pug": "^1.5.1",
+    "jquery": "^3.2.1"
+  }
+}

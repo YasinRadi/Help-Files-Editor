@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Help Files Tool</title>
+    <link rel="stylesheet" type="text/css" href="../css/edit.css" />
+</head>
+<body>
+    <h1 id='title'>Help Files Tool</h1>
+    <div id='fileName'></div>
+    <span id='descField'></span>
+    <hr />
+    <form id='elementList'></form>
+    <script>
+        if (typeof module === 'object') {
+            window.module = module;
+            module = undefined;
+        }
+    </script>
+    <script>
+        require('../js/renderer.js');
+    </script>
+    <script>if (window.module) module = window.module;</script>
+</body>
+</html>
