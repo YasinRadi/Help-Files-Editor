@@ -61,7 +61,7 @@ const menu = Menu.buildFromTemplate([
                 label: 'Save',
                 click: () => {
                     if(fh.getStepNum() <= 0) {
-                        alert(`There's nothing to be saved yet!`);
+                        alert(`Nothing to be saved yet!`);
                     } else {
                         if(confirm('Do you want to save the changes? File data will be overwritten.')) {
                             fh.save();
@@ -72,7 +72,15 @@ const menu = Menu.buildFromTemplate([
             {
                 label: 'Save new file...',
                 click: () => {
-
+                    if(is_file_open && is_file_new) {
+                        if(fh.getStepNum() > 0) {
+                            dialog.showSaveDialog((file) => {
+                                console.log(file);
+                            });
+                        } else {
+                            alert('Nothing to save yet!');
+                        }
+                    }
                 }
             },
             {

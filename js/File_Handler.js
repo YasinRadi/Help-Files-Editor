@@ -74,7 +74,9 @@ class File_Handler {
     }
 
     newFile() {
+        const self = File_Handler;
         fc.createNewFile();
+        self.addButtonListener(self);
     }
 
     /**
