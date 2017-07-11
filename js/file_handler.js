@@ -103,9 +103,7 @@ class File_Handler {
             if(name.includes('.')) {
                 name = name.substr(0, name.lastIndexOf('.'));
             }
-            console.log(name);
             path = path.replace(self.getFileName(path), `${name}.tour`);
-            console.log(path);
         } else {
             path = file_abs_path;
         }
