@@ -2,7 +2,7 @@
 
 const {app, electron} = require('electron');
 // Module to create native browser window.
-const {Menu, BrowserWindow} = require('electron');
+const {BrowserWindow} = require('electron');
 const path = require('path');
 const url  = require('url');
 
