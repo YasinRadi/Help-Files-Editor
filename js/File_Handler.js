@@ -12,6 +12,9 @@ let file_content = {};
 
 class File_Handler {
 
+    /**
+     *  Constructor.
+     */
     constructor() {}
 
     /**
@@ -73,6 +76,9 @@ class File_Handler {
         });
     }
 
+    /**
+     *  Creates a new file form.
+     */
     newFile() {
         const self = File_Handler;
         fc.createNewFile();
@@ -90,10 +96,17 @@ class File_Handler {
     /**
      * Saves the file content into a new file overwriting the open one.
      */
-    save() {
+    save(is_new_file, path) {
         let self = File_Handler;
         let json_content = JSON.stringify(self.createSavingObject(self));
-        fs.writeFile(file_abs_path, json_content, (err) => {
+        if(!is_new_file) {
+            path = file_abs_path;
+        } else {
+            let name = document.getElementById('fileNameInput').value;
+            name = name.substr(0, name.lastIndexOf('.'));
+            path = path.replace(self.getFileName(path), `${name}.tour`);
+        }
+        fs.writeFile(path, json_content, (err) => {
             if(err) {
                 alert(`There was an error saving the changes [${err}]`);
             }
@@ -110,7 +123,6 @@ class File_Handler {
 
     /**
      * Creates an object containing the current form data.
-     *
      * @returns {Object}
      */
     static createSavingObject(self) {
@@ -120,7 +132,6 @@ class File_Handler {
     /**
      * Creates the description part of the saving object.
      * @param obj {Object}
-     *
      * @returns {Object}
      */
     static descriptionObject(obj) {
@@ -129,8 +140,8 @@ class File_Handler {
     }
 
     /**
-     *
-     * @param self
+     * Adds the event listener to the add step button.
+     * @param self {class}
      */
     static addButtonListener(self) {
         document.querySelector('#addBtn').addEventListener('click', self.newStep);
@@ -139,7 +150,6 @@ class File_Handler {
     /**
      * Generates the object structure for the step array saving all the new data.
      * @param obj {Object}
-     *
      * @returns {Object}
      */
     static stepsObject(obj) {
@@ -161,7 +171,6 @@ class File_Handler {
     /**
      *  Given a file path return the file name using a regexp.
      *  @param path {String}
-     *
      *  @return name {String}
      */
     static getFileName(path) {
@@ -171,7 +180,6 @@ class File_Handler {
     /**
      * Handles new lines removing for all OS'.
      * @param str {String}
-     *
      * @returns {String}
      */
     static removeNewLines(str) {

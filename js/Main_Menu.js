@@ -63,22 +63,19 @@ const menu = Menu.buildFromTemplate([
                     if(fh.getStepNum() <= 0) {
                         alert(`Nothing to be saved yet!`);
                     } else {
-                        if(confirm('Do you want to save the changes? File data will be overwritten.')) {
-                            fh.save();
-                        }
-                    }
-                }
-            },
-            {
-                label: 'Save new file...',
-                click: () => {
-                    if(is_file_open && is_file_new) {
-                        if(fh.getStepNum() > 0) {
-                            dialog.showSaveDialog((file) => {
-                                console.log(file);
-                            });
-                        } else {
-                            alert('Nothing to save yet!');
+                        if(is_file_open && is_file_new) {
+                            if(fh.getStepNum() > 0) {
+                                dialog.showSaveDialog((file) => {
+                                    fh.save(true, file);
+                                    is_file_new = false;
+                                });
+                            } else {
+                                alert('Nothing to save yet!');
+                            }
+                        } else if(is_file_open && !is_file_new) {
+                            if(confirm('Do you want to save the changes? File data will be overwritten.')) {
+                                fh.save(false);
+                            }
                         }
                     }
                 }
