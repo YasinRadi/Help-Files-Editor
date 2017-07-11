@@ -81,7 +81,7 @@ class File_Handler {
     newFile() {
         const self = File_Handler;
         fc.createNewFile();
-        self.addButtonListener(self);
+        self.addButtonListener();
     }
 
     /**
@@ -144,9 +144,9 @@ class File_Handler {
 
     /**
      * Adds the event listener to the add step button.
-     * @param self {class}
      */
-    static addButtonListener(self) {
+    static addButtonListener() {
+        const self = File_Handler;
         document.querySelector('#addBtn').addEventListener('click', self.newStep);
     }
 
@@ -162,10 +162,10 @@ class File_Handler {
         steps.forEach((s, v) => {
             obj.steps.push({});
             s.querySelectorAll('input').forEach((i) => {
-                obj.steps[v][i.name] = i.value;
+                obj.steps[v][i.id] = i.value;
             });
             s.querySelectorAll('textarea').forEach((t) => {
-                obj.steps[v][t.name] = self.removeNewLines(t.value);
+                obj.steps[v][t.id] = self.removeNewLines(t.value);
             });
         });
         return obj;
