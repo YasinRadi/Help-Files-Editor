@@ -3,7 +3,7 @@
  */
 
 const TEMPLATE = `<span class="fieldTitle">Element:</span>
-                    <input name="element" value="" size="30" />
+                    <input name="element" value="#" size="30" />
                     <span class="fieldTitle">Title:</span>
                     <input name="title" value="" size="30" />
                     <span class="fieldTitle">Placement:</span>

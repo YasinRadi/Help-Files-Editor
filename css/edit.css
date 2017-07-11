@@ -25,7 +25,7 @@ div > span {
     margin-top: 8px;
 }
 
-div > span, div > input, div > textarea {
+div > span, form > div > input, div > textarea {
     margin-left: 30px;
 }
 
