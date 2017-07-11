@@ -3,12 +3,46 @@
  */
 const fh   = require('./File_Handler');
 const form = document.getElementById('elementList');
-const em   = `Element | Title | Content | Template fields must not be empty.`;
+const EMPTY_MSG = `Element | Title | Content | Template fields must not be empty.`;
+const SEL_MSG   = `Element field must start with '#' or '.'`;
+const NO_CHNG   = `Nothing to save yet!`;
 
 class Validator {
 
+    /**
+     * Constructor.
+     */
     constructor() {}
 
+    /**
+     *
+     * @param is_file_new
+     * @returns {boolean}
+     */
+    static validate(is_file_new) {
+        const self = Validator;
+        if(!self.changesExist()) {
+            alert(NO_CHNG);
+            return false;
+        }
+        if(!self.requiredFieldsNotBlank(is_file_new)) {
+            alert(self.emptyMessage(is_file_new));
+            return false;
+        }
+        console.log(self.checkSelector());
+        if(!self.checkSelector()) {
+            alert(self.selectorMessage());
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Checks if the required fields are not blank.
+     * @param is_new_file {boolean}
+     * @returns {boolean}
+     */
     static requiredFieldsNotBlank(is_new_file) {
         const steps = form.querySelectorAll('div');
         const steps_check = [];
@@ -35,18 +69,42 @@ class Validator {
         });
     }
 
+    /**
+     * Checks if there's steps to be saved.
+     * @returns {boolean}
+     */
     static changesExist() {
         return fh.getStepNum() > 0;
     }
 
+    /**
+     * Message to be showed if there are blank required fields.
+     * @param is_file_new {boolean}
+     * @returns {string}
+     */
     static emptyMessage(is_file_new) {
-        return is_file_new ? `File name | ${em}` : em;
+        return is_file_new ? `File name | ${EMPTY_MSG}` : em;
     }
 
+    /**
+     * Wrong selector message.
+     * @returns {string}
+     */
+    static selectorMessage() {
+        return SEL_MSG;
+    }
+
+    /**
+     * Checks if the inputted selector is a valid one.
+     * @returns {*}
+     */
     static checkSelector() {
-        const steps = form.querySelectorAll('div');
-        steps.every((s) => {
-            let id = s.getElementById(`element`).value[0];
+        let sels = [];
+        form.querySelectorAll('div').forEach((s) => {
+            sels.push(s.querySelectorAll(`#element`)[0]);
+        });
+        return Array.prototype.every.call(sels, (s) => {
+            let id = s.value[0];
             return id === `#` || id === `.`;
         });
     }

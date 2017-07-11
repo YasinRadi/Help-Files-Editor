@@ -59,31 +59,19 @@ const menu = Menu.buildFromTemplate([
             {
                 label: 'Save',
                 click: () => {
-                    if(!val.changesExist()) {
-                        alert(`Nothing to be saved yet!`);
-                    } else {
-                        if(is_file_open && is_file_new) {
-                            if(val.changesExist()) {
-                                if(val.requiredFieldsNotBlank(true)) {
-                                    dialog.showSaveDialog((file) => {
-                                        if(typeof file !== 'undefined') {
-                                            fh.save(true, file);
-                                            is_file_new = false;
-                                        }
-                                    });
-                                } else {
-                                    alert(val.emptyMessage(true));
+                    if(is_file_open && is_file_new) {
+                        if(val.validate(is_file_new)) {
+                            dialog.showSaveDialog((file) => {
+                                if(typeof file !== 'undefined') {
+                                    fh.save(true, file);
+                                    is_file_new = false;
                                 }
-                            } else {
-                                alert('Nothing to save yet!');
-                            }
-                        } else if(is_file_open && !is_file_new) {
-                            if(val.requiredFieldsNotBlank(false)) {
-                                if(confirm('Do you want to save the changes? File data will be overwritten.')) {
-                                    fh.save(false);
-                                }
-                            } else {
-                                alert(val.emptyMessage(false));
+                            });
+                        }
+                    } else if(is_file_open && !is_file_new) {
+                        if(val.validate(is_file_new)) {
+                            if(confirm('Do you want to save the changes? File data will be overwritten.')) {
+                                fh.save(false);
                             }
                         }
                     }
