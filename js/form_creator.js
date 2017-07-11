@@ -3,7 +3,7 @@
  */
 'use strict';
 
-const st   = require('./Step_Template');
+const st   = require('./step_template');
 const form = document.getElementById('elementList');
 const IMG  = '../public/img/';
 
