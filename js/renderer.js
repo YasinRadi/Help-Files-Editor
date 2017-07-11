@@ -3,5 +3,5 @@
 // All of the Node.js APIs are available in this process.
 'use strict';
 
-const mm = require('../js/Main_Menu');
-const fh = require('./File_Handler');
+const mm = require('./main_menu');
+const fh = require('./file_handler');

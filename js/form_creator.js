@@ -3,7 +3,7 @@
  */
 'use strict';
 
-const st   = require('./Step_Template');
+const st   = require('./step_template');
 const form = document.getElementById('elementList');
 const IMG  = '../public/img/';
 
@@ -115,7 +115,7 @@ class Form_Creator {
      */
     static createFormElement(type, name, content, id) {
         let node = document.createElement(type);
-        node.setAttribute('name', name);
+        node.setAttribute('id', name);
         if(type === 'textarea') {
             node.setAttribute('cols', 100);
             node.setAttribute('rows', 12);

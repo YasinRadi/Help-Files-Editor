@@ -4,8 +4,7 @@
 'use strict';
 
 const fs   = require('fs');
-const path = require('path');
-const fc   = require('./Form_Creator');
+const fc   = require('./form_creator');
 let file_abs_path = '';
 let step_num = 0;
 let file_content = {};
@@ -89,7 +88,7 @@ class File_Handler {
      * Step number getter.
      * @returns {number}
      */
-    getStepNum() {
+    static getStepNum() {
         return fc.getStepNum();
     }
 
