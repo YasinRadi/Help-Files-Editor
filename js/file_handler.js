@@ -88,7 +88,7 @@ class File_Handler {
      * Step number getter.
      * @returns {number}
      */
-    getStepNum() {
+    static getStepNum() {
         return fc.getStepNum();
     }
 

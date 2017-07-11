@@ -1,10 +1,10 @@
 'use strict';
 
-const {remote} = require('electron');
 const {dialog} = require('electron').remote;
 const {Menu} = require('electron').remote;
 const fc   = require('./form_creator');
 const File_Handler = require('./file_handler');
+const val  = require('./validator');
 const fh   = new File_Handler();
 const fs   = require('fs');
 const path = require('path');
@@ -59,21 +59,31 @@ const menu = Menu.buildFromTemplate([
             {
                 label: 'Save',
                 click: () => {
-                    if(fh.getStepNum() <= 0) {
+                    if(!val.changesExist()) {
                         alert(`Nothing to be saved yet!`);
                     } else {
                         if(is_file_open && is_file_new) {
-                            if(fh.getStepNum() > 0) {
-                                dialog.showSaveDialog((file) => {
-                                    fh.save(true, file);
-                                    is_file_new = false;
-                                });
+                            if(val.changesExist()) {
+                                if(val.requiredFieldsNotBlank(true)) {
+                                    dialog.showSaveDialog((file) => {
+                                        if(typeof file !== 'undefined') {
+                                            fh.save(true, file);
+                                            is_file_new = false;
+                                        }
+                                    });
+                                } else {
+                                    alert(val.emptyMessage(true));
+                                }
                             } else {
                                 alert('Nothing to save yet!');
                             }
                         } else if(is_file_open && !is_file_new) {
-                            if(confirm('Do you want to save the changes? File data will be overwritten.')) {
-                                fh.save(false);
+                            if(val.requiredFieldsNotBlank(false)) {
+                                if(confirm('Do you want to save the changes? File data will be overwritten.')) {
+                                    fh.save(false);
+                                }
+                            } else {
+                                alert(val.emptyMessage(false));
                             }
                         }
                     }
@@ -156,15 +166,6 @@ const menu = Menu.buildFromTemplate([
                 role: 'togglefullscreen'
             }
         ]
-    },
-    {
-        role: 'help',
-        submenu: [
-            {
-                label: 'Learn More',
-                click () { require('electron').shell.openExternal('http://electron.atom.io') }
-            }
-        ]
     }
 ]);
 
@@ -176,14 +177,5 @@ Menu.setApplicationMenu(menu);
 class Main_Menu {
     contructor(){}
 }
-
-Main_Menu.newWindow = (file) => {
-    remote.getCurrentWindow()
-      .loadURL(url.format({
-        pathname: path.join(`${__dirname}/views/${file}.html`),
-        protocol: 'file:',
-        slashes: true
-    }));
-};
 
 module.exports = Main_Menu;
