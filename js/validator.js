@@ -29,7 +29,6 @@ class Validator {
             alert(self.emptyMessage(is_file_new));
             return false;
         }
-        console.log(self.checkSelector());
         if(!self.checkSelector()) {
             alert(self.selectorMessage());
             return false;

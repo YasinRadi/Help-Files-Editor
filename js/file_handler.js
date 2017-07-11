@@ -98,12 +98,16 @@ class File_Handler {
     save(is_new_file, path) {
         let self = File_Handler;
         let json_content = JSON.stringify(self.createSavingObject(self));
-        if(!is_new_file) {
-            path = file_abs_path;
-        } else {
+        if(is_new_file) {
             let name = document.getElementById('fileNameInput').value;
-            name = name.substr(0, name.lastIndexOf('.'));
+            if(name.includes('.')) {
+                name = name.substr(0, name.lastIndexOf('.'));
+            }
+            console.log(name);
             path = path.replace(self.getFileName(path), `${name}.tour`);
+            console.log(path);
+        } else {
+            path = file_abs_path;
         }
         fs.writeFile(path, json_content, (err) => {
             if(err) {
