@@ -4,7 +4,6 @@
 'use strict';
 
 const fs   = require('fs');
-const path = require('path');
 const fc   = require('./form_creator');
 let file_abs_path = '';
 let step_num = 0;

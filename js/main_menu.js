@@ -1,9 +1,8 @@
 'use strict';
 
-const {remote, BrowserWindow} = require('electron');
+const {remote} = require('electron');
 const {dialog} = require('electron').remote;
 const {Menu} = require('electron').remote;
-const {MenuItem} = require('electron').remote;
 const fc   = require('./form_creator');
 const File_Handler = require('./file_handler');
 const fh   = new File_Handler();
@@ -67,12 +66,6 @@ const menu = Menu.buildFromTemplate([
                             fh.save();
                         }
                     }
-                }
-            },
-            {
-                label: 'Save new file...',
-                click: () => {
-
                 }
             },
             {
