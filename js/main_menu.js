@@ -1,9 +1,8 @@
 'use strict';
 
-const {dialog} = require('electron').remote;
-const {Menu} = require('electron').remote;
-const fc   = require('./form_creator');
+const {Menu, dialog} = require('electron').remote;
 const File_Handler = require('./file_handler');
+const fc   = require('./form_creator');
 const val  = require('./validator');
 const fh   = new File_Handler();
 const fs   = require('fs');

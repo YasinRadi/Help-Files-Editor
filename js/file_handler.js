@@ -3,11 +3,11 @@
  */
 'use strict';
 
-const fs   = require('fs');
-const fc   = require('./form_creator');
+const fs = require('fs');
+const fc = require('./form_creator');
 let file_abs_path = '';
+let file_content  = {};
 let step_num = 0;
-let file_content = {};
 
 class File_Handler {
 
