@@ -99,11 +99,14 @@ class File_Handler {
         let self = File_Handler;
         let json_content = JSON.stringify(self.createSavingObject(self));
         if(is_new_file) {
-            let name = document.getElementById('fileNameInput').value;
+            let name = self.getFileName(path);
+            console.log(name);
             if(name.includes('.')) {
                 name = name.substr(0, name.lastIndexOf('.'));
             }
+            console.log(name);
             path = path.replace(self.getFileName(path), `${name}.tour`);
+            console.log(path);
         } else {
             path = file_abs_path;
         }
