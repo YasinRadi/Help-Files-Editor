@@ -202,13 +202,6 @@ class Form_Creator {
     static createNewFile() {
         const self = Form_Creator;
         document.getElementById('title').innerHTML = 'New File Creation';
-        self.createFileNameField('');
-        let file_name_input = document.createElement('input');
-        file_name_input.setAttribute('id', 'fileNameInput');
-        file_name_input.setAttribute('type', 'text');
-        file_name_input.setAttribute('size', 30);
-        let name_field = document.getElementById('fileName');
-        name_field.appendChild(file_name_input);
         self.createDescField('');
         self.addStepButton();
     }

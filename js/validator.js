@@ -25,8 +25,8 @@ class Validator {
             alert(NO_CHNG);
             return false;
         }
-        if(!self.requiredFieldsNotBlank(is_file_new)) {
-            alert(self.emptyMessage(is_file_new));
+        if(!self.requiredFieldsNotBlank()) {
+            alert(EMPTY_MSG);
             return false;
         }
         if(!self.checkSelector()) {
@@ -39,16 +39,11 @@ class Validator {
 
     /**
      * Checks if the required fields are not blank.
-     * @param is_new_file {boolean}
      * @returns {boolean}
      */
-    static requiredFieldsNotBlank(is_new_file) {
+    static requiredFieldsNotBlank() {
         const steps = form.querySelectorAll('div');
         const steps_check = [];
-        if(is_new_file) {
-            const file_name = document.getElementById(`fileNameInput`).value;
-            steps_check.push(file_name !== '');
-        }
         steps.forEach((s) => {
             let inputs = s.querySelectorAll('input');
             const area = s.querySelectorAll('textarea');
@@ -74,15 +69,6 @@ class Validator {
      */
     static changesExist() {
         return fh.getStepNum() > 0;
-    }
-
-    /**
-     * Message to be showed if there are blank required fields.
-     * @param is_file_new {boolean}
-     * @returns {string}
-     */
-    static emptyMessage(is_file_new) {
-        return is_file_new ? `File name | ${EMPTY_MSG}` : em;
     }
 
     /**
