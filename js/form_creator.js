@@ -67,7 +67,7 @@ class Form_Creator {
         let step_div = document.createElement('div');
         step_div.innerHTML = tmpl !== 'undefined' ? tmpl : '';
         step_div.id = `step_${id}`;
-        step_div.className = 'form-group';
+        step_div.className = 'form-group step-div';
         return step_div;
     }
 
@@ -88,12 +88,22 @@ class Form_Creator {
      * Creates a separator for each step div and appends them.
      */
     static createSeparators() {
-        const step_divs = form.querySelectorAll('div');
+        const step_divs = form.querySelectorAll('div.form-group.step-div');
+        console.log(step_divs);
         step_divs.forEach((s) => {
-            s.appendChild(document.createElement('hr'));
+            let inner_div = document.createElement('div');
+            inner_div.className = 'form-group col-md-12';
+            inner_div.appendChild(document.createElement('hr'));
+            s.appendChild(inner_div);
         });
     }
 
+    /**
+     *
+     * @param id
+     * @param name
+     * @param inp
+     */
     static createGroupContainer(id, name, inp) {
         const self = Form_Creator;
         let div = document.createElement('div');
@@ -132,7 +142,6 @@ class Form_Creator {
             node.innerHTML = content;
         } else {
             node.setAttribute('value', content);
-            node.setAttribute('size', 30);
         }
         return node;
     }
@@ -142,7 +151,7 @@ class Form_Creator {
      */
     static createNextStep() {
         const self = Form_Creator;
-        let last_step    = form.querySelectorAll('div')[form.querySelectorAll('div').length - 1];
+        let last_step = form.querySelectorAll('.step-div')[document.querySelectorAll('.step-div').length - 1];
         let last_step_id = typeof last_step !== 'undefined' ? last_step.getAttribute('id') : `step_-1`;
         let next_step_id = parseInt(last_step_id.split('_')[1]) + 1;
         self.createStep(next_step_id, st.getStepTemplate());

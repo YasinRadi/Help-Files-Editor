@@ -160,7 +160,7 @@ class File_Handler {
     static stepsObject(obj) {
         let self = File_Handler;
         obj.steps = [];
-        let steps = document.getElementById('elementList').querySelectorAll('div');
+        let steps = document.querySelectorAll('div.form-group.step-div');
         steps.forEach((s, v) => {
             obj.steps.push({});
             s.querySelectorAll('input').forEach((i) => {

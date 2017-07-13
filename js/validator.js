@@ -85,7 +85,7 @@ class Validator {
      */
     static checkSelector() {
         let sels = [];
-        form.querySelectorAll('div').forEach((s) => {
+        form.querySelectorAll('div.form-group.step-div').forEach((s) => {
             sels.push(s.querySelectorAll(`#element`)[0]);
         });
         return Array.prototype.every.call(sels, (s) => {
