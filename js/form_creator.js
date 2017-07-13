@@ -115,7 +115,7 @@ class Form_Creator {
     static createGroupContainer(id, name, inp) {
         const self = Form_Creator;
         let div = document.createElement('div');
-        div.className = 'form-group col-md-12';
+        div.className = 'form-group col-md-12 has-feedback';
         div.appendChild(self.createFieldHeader(name));
         div.appendChild(inp);
         document.getElementById(id).appendChild(div);
