@@ -38,9 +38,7 @@ const menu = Menu.buildFromTemplate([
                         if(!is_file_new) {
                             dialog.showOpenDialog((file) => {
                                 if(typeof file !== 'undefined') {
-                                    document.getElementById('title').innerHTML = 'Editing Screen';
                                     fh.openFile(file[0]);
-                                    fc.addStepButton();
                                     is_file_open = true;
                                 }
                             });

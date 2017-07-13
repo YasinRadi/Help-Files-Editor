@@ -27,11 +27,11 @@ class Form_Creator {
     static createDescField(content) {
         const desc_field = document.getElementById('descField');
         desc_field.textContent = 'Description:';
-        desc_field.className = 'nameTitle';
+        desc_field.className = 'form-group';
         const desc = document.createElement('input');
         desc.setAttribute('id', 'desc');
+        desc.className = 'form-control';
         desc.setAttribute('value', content);
-        desc.setAttribute('size', 80);
         desc_field.appendChild(desc);
     }
 
@@ -56,6 +56,7 @@ class Form_Creator {
         form.appendChild(step_name);
         form.appendChild(self.createStepDiv(id, divTmpl));
         self.applyRemoveListener();
+        self.addStepButton();
     }
 
     /**
@@ -67,6 +68,7 @@ class Form_Creator {
         let step_div = document.createElement('div');
         step_div.innerHTML = tmpl !== 'undefined' ? tmpl : '';
         step_div.id = `step_${id}`;
+        step_div.className = 'form-group step-div';
         return step_div;
     }
 
@@ -84,26 +86,53 @@ class Form_Creator {
     }
 
     /**
+     * Style changing when opening file.
+     */
+    static reStyle(text) {
+        document.querySelector('div.container.init').classList.remove('init');
+        document.getElementById('title').innerHTML = text;
+    }
+
+    /**
      * Creates a separator for each step div and appends them.
      */
     static createSeparators() {
-        const step_divs = form.querySelectorAll('div');
+        const step_divs = form.querySelectorAll('div.form-group.step-div');
         step_divs.forEach((s) => {
-            s.appendChild(document.createElement('hr'));
+            let inner_div = document.createElement('div');
+            inner_div.className = 'form-group col-md-12';
+            inner_div.appendChild(document.createElement('hr'));
+            s.appendChild(inner_div);
         });
+    }
+
+    /**
+     * Creates a div container for each form elements group.
+     * @param id {String}
+     * @param name {String}
+     * @param inp {Electron.WebviewTag|Element}
+     */
+    static createGroupContainer(id, name, inp) {
+        const self = Form_Creator;
+        let div = document.createElement('div');
+        div.className = 'form-group col-md-12';
+        div.appendChild(self.createFieldHeader(name));
+        div.appendChild(inp);
+        document.getElementById(id).appendChild(div);
     }
 
     /**
      *  Creates a form field header and adds it to the form.
      *  @param name {String}
-     *  @param id {String}
+     *  @returns {Electron.WebviewTag|Element}
      */
-    static createFieldHeader(name, id) {
+    static createFieldHeader(name) {
         const self = Form_Creator;
-        let field = document.createElement('span');
+        let field = document.createElement('label');
         field.textContent = `${self.capitalize(name)}:`;
-        field.className = 'fieldTitle';
-        document.getElementById(id).appendChild(field);
+        field.setAttribute('for', name);
+        field.className = 'control-label';
+        return field;
     }
 
     /**
@@ -111,20 +140,20 @@ class Form_Creator {
      *  @param type {String}
      *  @param name {String}
      *  @param content {String}
-     *  @param id {String}
+     *  @returns {Electron.WebviewTag|Element}
      */
-    static createFormElement(type, name, content, id) {
+    static createFormElement(type, name, content) {
         let node = document.createElement(type);
         node.setAttribute('id', name);
+        node.className = 'form-control';
         if(type === 'textarea') {
             node.setAttribute('cols', 100);
             node.setAttribute('rows', 12);
             node.innerHTML = content;
         } else {
             node.setAttribute('value', content);
-            node.setAttribute('size', 30);
         }
-        document.getElementById(id).appendChild(node);
+        return node;
     }
 
     /**
@@ -132,7 +161,7 @@ class Form_Creator {
      */
     static createNextStep() {
         const self = Form_Creator;
-        let last_step    = form.querySelectorAll('div')[form.querySelectorAll('div').length - 1];
+        let last_step = form.querySelectorAll('.step-div')[document.querySelectorAll('.step-div').length - 1];
         let last_step_id = typeof last_step !== 'undefined' ? last_step.getAttribute('id') : `step_-1`;
         let next_step_id = parseInt(last_step_id.split('_')[1]) + 1;
         self.createStep(next_step_id, st.getStepTemplate());
@@ -142,13 +171,19 @@ class Form_Creator {
      * Adds a plus button to the screen.
      */
     static addStepButton() {
+        const self = Form_Creator;
+        const addBtn = document.getElementById('addBtn');
+        if(addBtn !== null) {
+           form.removeChild(addBtn);
+        }
         let btn = document.createElement('input');
         btn.setAttribute('id', 'addBtn');
         btn.className = 'addBtn';
         btn.setAttribute('src', `${IMG}add_sign.jpg`);
         btn.setAttribute('type', 'image');
         btn.setAttribute('title', 'Add step');
-        document.body.appendChild(btn);
+        btn.onclick = self.createNextStep;
+        form.appendChild(btn);
     }
 
     /**
@@ -201,7 +236,7 @@ class Form_Creator {
      */
     static createNewFile() {
         const self = Form_Creator;
-        document.getElementById('title').innerHTML = 'New File Creation';
+        self.reStyle('New File Creation');
         self.createDescField('');
         self.addStepButton();
     }

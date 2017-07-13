@@ -27,6 +27,12 @@ class File_Handler {
               console.log(err);
             }
             try {
+
+                /**
+                 * New page styling.
+                 */
+                fc.reStyle('Editing Screen');
+
                 /**
                  * File absolute path setting.
                  */
@@ -56,19 +62,20 @@ class File_Handler {
                  * Form content generation using tour steps.
                  */
                 tour.steps.forEach((s, v) => {
-                    let current_step = `step_${v}`;
                     fc.createStep(v);
                     Object.keys(s).map((k) => {
-                        fc.createFieldHeader(k, current_step);
+                        //fc.createFieldHeader(k, current_step);
+                        let node = {};
                         if(s[k].length > 20) {
-                            fc.createFormElement('textarea', k, s[k], current_step);
+                            node = fc.createFormElement('textarea', k, s[k]);
                         } else {
-                            fc.createFormElement('input', k, s[k], current_step);
+                            node = fc.createFormElement('input', k, s[k]);
                         }
+                        fc.createGroupContainer(`step_${v}`, k, node);
                     });
+                    fc.addStepButton();
                 });
                 fc.createSeparators();
-                self.addButtonListener(self);
             } catch (ex) {
                 console.log(`Wrong file format [${ex}]`);
             }
@@ -79,9 +86,7 @@ class File_Handler {
      *  Creates a new file form.
      */
     newFile() {
-        const self = File_Handler;
         fc.createNewFile();
-        self.addButtonListener();
     }
 
     /**
@@ -159,7 +164,7 @@ class File_Handler {
     static stepsObject(obj) {
         let self = File_Handler;
         obj.steps = [];
-        let steps = document.getElementById('elementList').querySelectorAll('div');
+        let steps = document.querySelectorAll('div.form-group.step-div');
         steps.forEach((s, v) => {
             obj.steps.push({});
             s.querySelectorAll('input').forEach((i) => {

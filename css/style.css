@@ -1,20 +1,34 @@
 body {
-    font-family: "Arial Unicode MS", 'sans-serif';
-    margin:0 80px 80px 80px;
+    font-family: "Helvetica Neue", 'Helvetica', 'Arial', 'sans-serif';
+    margin:0 auto;
+    background-color: #c5c6c9!important;
 }
 
-h1 {
+.container {
+    margin: 20px 0 20px 0;
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+.init {
+    margin-top: 300px;
+    text-align: center;
+    background-color: #c5c6c9;
+    text-decoration: none;
+}
+
+.init h2 {
+    font-size: 48px;
+    text-decoration: none;
+}
+
+h2 {
     text-decoration: underline;
 }
 
 .stepTitle, .nameTitle {
-    font-weight: bold;
     font-size: 18px;
     margin-top: 3px;
-}
-
-.fieldTitle {
-    font-weight: bold;
 }
 
 input, span {
@@ -25,13 +39,13 @@ div > span {
     margin-top: 8px;
 }
 
-div > span, form > div > input, div > textarea {
+div > span, form > div > input {
     margin-left: 30px;
 }
 
 .addBtn {
     display: block;
-    margin-left: 45%;
+    margin: 0 0 1% 45%;
     text-align: center;
     width: 30px;
     height: 30px;
