@@ -6,6 +6,7 @@ const form = document.getElementById('elementList');
 const EMPTY_MSG = `Element | Title | Content | Template fields must not be empty.`;
 const SEL_MSG   = `Element field must start with '#' or '.'`;
 const NO_CHNG   = `Nothing to save yet!`;
+let error_elements = [];
 
 class Validator {
 
@@ -45,18 +46,19 @@ class Validator {
         const steps = form.querySelectorAll('div.form-group.step-div');
         const steps_check = [];
         steps.forEach((s) => {
-            let inputs = s.querySelectorAll('input');
-            const area = s.querySelectorAll('textarea');
-            inputs = Array.prototype.filter.call(inputs, (el) => {
-                return el.id === 'element'
-                    || el.id === 'title'
-                    || el.id === 'content'
-                    || el.id === 'template';
+            const groups = s.querySelectorAll('div.form-group.col-md-12.has-feedback');
+            groups.forEach((g) => {
+                let input = g.querySelector('.form-control');
+                if((input.id === 'element' || input.id === 'title'
+                    || input.id === 'content' || input.id === 'template') && input.value === '')
+                {
+                    g.classList.add('has-error');
+                    steps_check.push(false);
+                } else {
+                    g.classList.remove('has-error');
+                    steps_check.push(true);
+                }
             });
-            inputs.push.apply(inputs, area);
-            steps_check.push(inputs.every((el) => {
-                 return el.value !== '';
-            }));
         });
         return steps_check.every((chck) => {
             return chck;
@@ -86,7 +88,18 @@ class Validator {
     static checkSelector() {
         let sels = [];
         form.querySelectorAll('div.form-group.step-div').forEach((s) => {
-            sels.push(s.querySelectorAll(`#element`)[0]);
+            const groups = s.querySelectorAll('div.form-group.col-md-12.has-feedback');
+            groups.forEach((g) => {
+                const element = g.querySelector('.form-control');
+                if(element.id === 'element') {
+                    if(element.value[0] === '#' || element.value[0] === '.') {
+                        g.classList.remove('has-error');
+                    } else {
+                        g.classList.add('has-error');
+                        sels.push(element);
+                    }
+                }
+            });
         });
         return Array.prototype.every.call(sels, (s) => {
             let id = s.value[0];
