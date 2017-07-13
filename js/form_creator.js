@@ -56,6 +56,7 @@ class Form_Creator {
         form.appendChild(step_name);
         form.appendChild(self.createStepDiv(id, divTmpl));
         self.applyRemoveListener();
+        self.addStepButton();
     }
 
     /**
@@ -85,11 +86,18 @@ class Form_Creator {
     }
 
     /**
+     * Style changing when opening file.
+     */
+    static reStyle(text) {
+        document.querySelector('div.container.init').classList.remove('init');
+        document.getElementById('title').innerHTML = text;
+    }
+
+    /**
      * Creates a separator for each step div and appends them.
      */
     static createSeparators() {
         const step_divs = form.querySelectorAll('div.form-group.step-div');
-        console.log(step_divs);
         step_divs.forEach((s) => {
             let inner_div = document.createElement('div');
             inner_div.className = 'form-group col-md-12';
@@ -99,10 +107,10 @@ class Form_Creator {
     }
 
     /**
-     *
-     * @param id
-     * @param name
-     * @param inp
+     * Creates a div container for each form elements group.
+     * @param id {String}
+     * @param name {String}
+     * @param inp {Electron.WebviewTag|Element}
      */
     static createGroupContainer(id, name, inp) {
         const self = Form_Creator;
@@ -116,13 +124,13 @@ class Form_Creator {
     /**
      *  Creates a form field header and adds it to the form.
      *  @param name {String}
+     *  @returns {Electron.WebviewTag|Element}
      */
     static createFieldHeader(name) {
         const self = Form_Creator;
         let field = document.createElement('label');
         field.textContent = `${self.capitalize(name)}:`;
         field.setAttribute('for', name);
-        field.className = 'fieldTitle';
         return field;
     }
 
@@ -131,6 +139,7 @@ class Form_Creator {
      *  @param type {String}
      *  @param name {String}
      *  @param content {String}
+     *  @returns {Electron.WebviewTag|Element}
      */
     static createFormElement(type, name, content) {
         let node = document.createElement(type);
@@ -161,13 +170,19 @@ class Form_Creator {
      * Adds a plus button to the screen.
      */
     static addStepButton() {
+        const self = Form_Creator;
+        const addBtn = document.getElementById('addBtn');
+        if(addBtn !== null) {
+           form.removeChild(addBtn);
+        }
         let btn = document.createElement('input');
         btn.setAttribute('id', 'addBtn');
         btn.className = 'addBtn';
         btn.setAttribute('src', `${IMG}add_sign.jpg`);
         btn.setAttribute('type', 'image');
         btn.setAttribute('title', 'Add step');
-        document.body.appendChild(btn);
+        btn.onclick = self.createNextStep;
+        form.appendChild(btn);
     }
 
     /**
@@ -220,7 +235,7 @@ class Form_Creator {
      */
     static createNewFile() {
         const self = Form_Creator;
-        document.getElementById('title').innerHTML = 'New File Creation';
+        self.reStyle('New File Creation');
         self.createDescField('');
         self.addStepButton();
     }

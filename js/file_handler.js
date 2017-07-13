@@ -27,6 +27,12 @@ class File_Handler {
               console.log(err);
             }
             try {
+
+                /**
+                 * New page styling.
+                 */
+                fc.reStyle('Editing Screen');
+
                 /**
                  * File absolute path setting.
                  */
@@ -67,9 +73,9 @@ class File_Handler {
                         }
                         fc.createGroupContainer(`step_${v}`, k, node);
                     });
+                    fc.addStepButton();
                 });
                 fc.createSeparators();
-                self.addButtonListener(self);
             } catch (ex) {
                 console.log(`Wrong file format [${ex}]`);
             }
@@ -80,9 +86,7 @@ class File_Handler {
      *  Creates a new file form.
      */
     newFile() {
-        const self = File_Handler;
         fc.createNewFile();
-        self.addButtonListener();
     }
 
     /**
