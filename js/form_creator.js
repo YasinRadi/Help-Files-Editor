@@ -131,6 +131,7 @@ class Form_Creator {
         let field = document.createElement('label');
         field.textContent = `${self.capitalize(name)}:`;
         field.setAttribute('for', name);
+        field.className = 'control-label';
         return field;
     }
 

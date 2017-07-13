@@ -42,7 +42,7 @@ class Validator {
      * @returns {boolean}
      */
     static requiredFieldsNotBlank() {
-        const steps = form.querySelectorAll('div');
+        const steps = form.querySelectorAll('div.form-group.step-div');
         const steps_check = [];
         steps.forEach((s) => {
             let inputs = s.querySelectorAll('input');
