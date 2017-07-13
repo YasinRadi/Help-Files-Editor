@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Help Files Tool</title>
+    <!-- Main CSS Styling -->
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
+
+    <!-- Bootstrap 3 CSS Styling -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
-    <h1 id='title'>Help Files Tool</h1>
-    <div id='fileName'></div>
-    <span id='descField'></span>
-    <hr />
-    <form id='elementList'></form>
+    <div class="container">
+        <h1 id='title'>Help Files Tool</h1>
+        <div id='fileName'></div>
+        <div id='descField'></div>
+        <hr />
+        <form id='elementList'></form>
+    </div>
     <script>
         if (typeof module === 'object') {
             window.module = module;

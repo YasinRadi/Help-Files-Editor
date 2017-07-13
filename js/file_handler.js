@@ -56,15 +56,16 @@ class File_Handler {
                  * Form content generation using tour steps.
                  */
                 tour.steps.forEach((s, v) => {
-                    let current_step = `step_${v}`;
                     fc.createStep(v);
                     Object.keys(s).map((k) => {
-                        fc.createFieldHeader(k, current_step);
+                        //fc.createFieldHeader(k, current_step);
+                        let node = {};
                         if(s[k].length > 20) {
-                            fc.createFormElement('textarea', k, s[k], current_step);
+                            node = fc.createFormElement('textarea', k, s[k]);
                         } else {
-                            fc.createFormElement('input', k, s[k], current_step);
+                            node = fc.createFormElement('input', k, s[k]);
                         }
+                        fc.createGroupContainer(`step_${v}`, k, node);
                     });
                 });
                 fc.createSeparators();

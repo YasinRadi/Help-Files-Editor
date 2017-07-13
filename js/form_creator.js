@@ -27,11 +27,11 @@ class Form_Creator {
     static createDescField(content) {
         const desc_field = document.getElementById('descField');
         desc_field.textContent = 'Description:';
-        desc_field.className = 'nameTitle';
+        desc_field.className = 'form-group';
         const desc = document.createElement('input');
         desc.setAttribute('id', 'desc');
+        desc.className = 'form-control';
         desc.setAttribute('value', content);
-        desc.setAttribute('size', 80);
         desc_field.appendChild(desc);
     }
 
@@ -67,6 +67,7 @@ class Form_Creator {
         let step_div = document.createElement('div');
         step_div.innerHTML = tmpl !== 'undefined' ? tmpl : '';
         step_div.id = `step_${id}`;
+        step_div.className = 'form-group';
         return step_div;
     }
 
@@ -93,17 +94,26 @@ class Form_Creator {
         });
     }
 
+    static createGroupContainer(id, name, inp) {
+        const self = Form_Creator;
+        let div = document.createElement('div');
+        div.className = 'form-group col-md-12';
+        div.appendChild(self.createFieldHeader(name));
+        div.appendChild(inp);
+        document.getElementById(id).appendChild(div);
+    }
+
     /**
      *  Creates a form field header and adds it to the form.
      *  @param name {String}
-     *  @param id {String}
      */
-    static createFieldHeader(name, id) {
+    static createFieldHeader(name) {
         const self = Form_Creator;
-        let field = document.createElement('span');
+        let field = document.createElement('label');
         field.textContent = `${self.capitalize(name)}:`;
+        field.setAttribute('for', name);
         field.className = 'fieldTitle';
-        document.getElementById(id).appendChild(field);
+        return field;
     }
 
     /**
@@ -111,11 +121,11 @@ class Form_Creator {
      *  @param type {String}
      *  @param name {String}
      *  @param content {String}
-     *  @param id {String}
      */
-    static createFormElement(type, name, content, id) {
+    static createFormElement(type, name, content) {
         let node = document.createElement(type);
         node.setAttribute('id', name);
+        node.className = 'form-control';
         if(type === 'textarea') {
             node.setAttribute('cols', 100);
             node.setAttribute('rows', 12);
@@ -124,7 +134,7 @@ class Form_Creator {
             node.setAttribute('value', content);
             node.setAttribute('size', 30);
         }
-        document.getElementById(id).appendChild(node);
+        return node;
     }
 
     /**
