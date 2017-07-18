@@ -3,10 +3,11 @@
  */
 const fh   = require('./File_Handler');
 const form = document.getElementById('elementList');
-const EMPTY_MSG = `Element | Title | Content | Template fields must not be empty.`;
+const EMPTY_MSG = `Title | Content | Template fields must not be empty.`;
 const SEL_MSG   = `Element field must start with '#' or '.'`;
 const NO_CHNG   = `Nothing to save yet!`;
-let error_elements = [];
+const ORPH_MSG  = `An orphan step cannot have element!`;
+const ELM_MSG   = `Element cannot be empty in non orphan steps!`;
 
 class Validator {
 
@@ -16,11 +17,10 @@ class Validator {
     constructor() {}
 
     /**
-     *
-     * @param is_file_new
+     * Validates the form.
      * @returns {boolean}
      */
-    static validate(is_file_new) {
+    static validate() {
         const self = Validator;
         if(!self.changesExist()) {
             alert(NO_CHNG);
@@ -30,12 +30,7 @@ class Validator {
             alert(EMPTY_MSG);
             return false;
         }
-        if(!self.checkSelector()) {
-            alert(self.selectorMessage());
-            return false;
-        }
-
-        return true;
+        return self.checkElementsOprhanity();
     }
 
     /**
@@ -49,8 +44,7 @@ class Validator {
             const groups = s.querySelectorAll('div.form-group.col-md-12.has-feedback');
             groups.forEach((g) => {
                 let input = g.querySelector('.form-control');
-                if((input.id === 'element' || input.id === 'title'
-                    || input.id === 'content' || input.id === 'template') && input.value === '')
+                if((input.id === 'title' || input.id === 'content' || input.id === 'template') && input.value === '')
                 {
                     g.classList.add('has-error');
                     steps_check.push(false);
@@ -74,37 +68,68 @@ class Validator {
     }
 
     /**
-     * Wrong selector message.
-     * @returns {string}
+     * Checks if the inputted selector is a valid one.
+     * @returns {boolean}
      */
-    static selectorMessage() {
-        return SEL_MSG;
+    static checkElementsOprhanity() {
+        const self = Validator;
+        let check = [];
+        form.querySelectorAll('div.form-group.step-div').forEach((s) => {
+            const res = self.checkOrphan(s);
+            if(res !== true) {
+                alert(res);
+                check.push(false);
+            }
+        });
+        return check.every((chck) => {
+            return chck;
+        });
     }
 
     /**
-     * Checks if the inputted selector is a valid one.
-     * @returns {*}
+     * Checks if the file has the right extension.
+     * @param path {String}
+     * @returns {boolean}
      */
-    static checkSelector() {
-        let sels = [];
-        form.querySelectorAll('div.form-group.step-div').forEach((s) => {
-            const groups = s.querySelectorAll('div.form-group.col-md-12.has-feedback');
-            groups.forEach((g) => {
-                const element = g.querySelector('.form-control');
-                if(element.id === 'element') {
-                    if(element.value[0] === '#' || element.value[0] === '.') {
-                        g.classList.remove('has-error');
-                    } else {
-                        g.classList.add('has-error');
-                        sels.push(element);
-                    }
-                }
-            });
-        });
-        return Array.prototype.every.call(sels, (s) => {
-            let id = s.value[0];
-            return id === `#` || id === `.`;
-        });
+    static checkExtension(path) {
+        return fh.getFileName(path).split('.')[1] === 'tour';
+    }
+
+    /**
+     * Checks whether the element selector has the right syntax or not.
+     * @param element {Element}
+     * @returns {String|boolean}
+     */
+    static checkSelector(element) {
+        const g = element.parentNode;
+        if(element.value[0] === '#' || element.value[0] === '.') {
+            g.classList.remove('has-error');
+            return true;
+        } else {
+            g.classList.add('has-error');
+            return SEL_MSG;
+        }
+    }
+
+    /**
+     * Checks if orphan is active and its combination with element.
+     * @param step_div {Element}
+     * @returns {String|boolean}
+     */
+    static checkOrphan(step_div) {
+        const self = Validator;
+        const element = step_div.querySelector('#element');
+        const orphan  = step_div.querySelector('#orphan');
+        const g       = element.parentNode;
+        if(orphan.value === 'true' && element.value !== '') {
+            g.classList.add('has-error');
+            return ORPH_MSG;
+        } else if(orphan.value !== 'true' && element.value === '') {
+            g.classList.add('has-error');
+            return ELM_MSG;
+        }
+
+        return self.checkSelector(step_div);
     }
 }
 
