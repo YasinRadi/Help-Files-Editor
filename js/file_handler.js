@@ -101,7 +101,7 @@ class File_Handler {
      */
     save(is_new_file, path) {
         let self = File_Handler;
-        let json_content = JSON.stringify(self.createSavingObject(self));
+        let json_content = JSON.stringify(self.createSavingObject(self), null, 4);
         if(is_new_file) {
             let name = self.getFileName(path);
             if(name.includes('.')) {
