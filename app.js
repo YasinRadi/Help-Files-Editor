@@ -13,7 +13,7 @@ let mainWindow = null;
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-      title: 'Help Files Tool',
+      title: 'Help Files Editor',
       width: 800,
       height: 600,
       icon: path.join(`${__dirname}/public/img/tour_icon.ico`)

@@ -2,7 +2,6 @@
 
 const {Menu, dialog} = require('electron').remote;
 const File_Handler = require('./file_handler');
-const fc   = require('./form_creator');
 const val  = require('./validator');
 const fh   = new File_Handler();
 const fs   = require('fs');
@@ -38,8 +37,12 @@ const menu = Menu.buildFromTemplate([
                         if(!is_file_new) {
                             dialog.showOpenDialog((file) => {
                                 if(typeof file !== 'undefined') {
-                                    fh.openFile(file[0]);
-                                    is_file_open = true;
+                                    if(val.checkExtension(file[0])) {
+                                        fh.openFile(file[0]);
+                                        is_file_open = true;
+                                    } else {
+                                        alert(`File must be '.tour' type.`);
+                                    }
                                 }
                             });
                         } else {
@@ -57,7 +60,7 @@ const menu = Menu.buildFromTemplate([
                 label: 'Save',
                 click: () => {
                     if(is_file_open && is_file_new) {
-                        if(val.validate(is_file_new)) {
+                        if(val.validate()) {
                             dialog.showSaveDialog((file) => {
                                 if(typeof file !== 'undefined') {
                                     fh.save(true, file);
@@ -66,7 +69,7 @@ const menu = Menu.buildFromTemplate([
                             });
                         }
                     } else if(is_file_open && !is_file_new) {
-                        if(val.validate(is_file_new)) {
+                        if(val.validate()) {
                             if(confirm('Do you want to save the changes? File data will be overwritten.')) {
                                 fh.save(false);
                             }

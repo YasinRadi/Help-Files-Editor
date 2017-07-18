@@ -64,7 +64,6 @@ class File_Handler {
                 tour.steps.forEach((s, v) => {
                     fc.createStep(v);
                     Object.keys(s).map((k) => {
-                        //fc.createFieldHeader(k, current_step);
                         let node = {};
                         if(s[k].length > 20) {
                             node = fc.createFormElement('textarea', k, s[k]);
@@ -146,14 +145,6 @@ class File_Handler {
     static descriptionObject(obj) {
         obj._description = document.getElementById('desc').value;
         return obj;
-    }
-
-    /**
-     * Adds the event listener to the add step button.
-     */
-    static addButtonListener() {
-        const self = File_Handler;
-        document.querySelector('#addBtn').addEventListener('click', self.newStep);
     }
 
     /**
