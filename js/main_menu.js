@@ -20,6 +20,7 @@ const menu = Menu.buildFromTemplate([
         submenu: [
             {
                 label: 'New file',
+                accelerator: 'CmdOrCtrl+N',
                 click: () => {
                     if(!is_file_open && !is_file_new) {
                         fh.newFile();
@@ -32,6 +33,7 @@ const menu = Menu.buildFromTemplate([
             },
             {
                 label: 'Open file...',
+                accelerator: 'CmdOrCtrl+O',
                 click: () => {
                     if(!is_file_open) {
                         if(!is_file_new) {
@@ -58,6 +60,7 @@ const menu = Menu.buildFromTemplate([
             },
             {
                 label: 'Save',
+                accelerator: 'CmdOrCtrl+S',
                 click: () => {
                     if(is_file_open && is_file_new) {
                         if(val.validate()) {
