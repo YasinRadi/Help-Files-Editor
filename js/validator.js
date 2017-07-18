@@ -8,6 +8,7 @@ const SEL_MSG   = `Element field must start with '#' or '.'`;
 const NO_CHNG   = `Nothing to save yet!`;
 const ORPH_MSG  = `An orphan step cannot have element!`;
 const ELM_MSG   = `Element cannot be empty in non orphan steps!`;
+let MSG = '';
 
 class Validator {
 
@@ -30,7 +31,12 @@ class Validator {
             alert(EMPTY_MSG);
             return false;
         }
-        return self.checkElementsOprhanity();
+        if(!self.checkElementsOrphanity()) {
+            alert(MSG);
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -71,19 +77,18 @@ class Validator {
      * Checks if the inputted selector is a valid one.
      * @returns {boolean}
      */
-    static checkElementsOprhanity() {
+    static checkElementsOrphanity() {
         const self = Validator;
-        let check = [];
-        form.querySelectorAll('div.form-group.step-div').forEach((s) => {
-            const res = self.checkOrphan(s);
+        const divs = form.querySelectorAll('div.form-group.step-div');
+        for(let i = 0; i < divs.length; i++) {
+            let res = self.checkOrphan(divs[i]);
             if(res !== true) {
-                alert(res);
-                check.push(false);
+                MSG = res;
+                return false;
             }
-        });
-        return check.every((chck) => {
-            return chck;
-        });
+        }
+
+        return true;
     }
 
     /**
@@ -120,16 +125,25 @@ class Validator {
         const self = Validator;
         const element = step_div.querySelector('#element');
         const orphan  = step_div.querySelector('#orphan');
-        const g       = element.parentNode;
-        if(orphan.value === 'true' && element.value !== '') {
-            g.classList.add('has-error');
-            return ORPH_MSG;
-        } else if(orphan.value !== 'true' && element.value === '') {
-            g.classList.add('has-error');
-            return ELM_MSG;
+        const eg      = element.parentNode;
+        const og      = orphan.parentNode;
+        if(orphan.value === 'true') {
+            if(element.value !== '') {
+                eg.classList.add('has-error');
+                og.classList.add('has-error');
+                return ORPH_MSG;
+            }
+        } else {
+            if(element.value === '') {
+                eg.classList.add('has-error');
+                return ELM_MSG;
+            } else {
+                return self.checkSelector(element);
+            }
         }
 
-        return self.checkSelector(step_div);
+        og.classList.remove('has-error');
+        return true;
     }
 }
 

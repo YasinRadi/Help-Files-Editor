@@ -104,13 +104,10 @@ class File_Handler {
         let json_content = JSON.stringify(self.createSavingObject(self));
         if(is_new_file) {
             let name = self.getFileName(path);
-            console.log(name);
             if(name.includes('.')) {
                 name = name.substr(0, name.lastIndexOf('.'));
             }
-            console.log(name);
             path = path.replace(self.getFileName(path), `${name}.tour`);
-            console.log(path);
         } else {
             path = file_abs_path;
         }
@@ -120,13 +117,6 @@ class File_Handler {
             }
             alert('Changes saved successfully.');
         });
-    }
-
-    /**
-     * Adds a step to the file.
-     */
-    static newStep() {
-        fc.createNextStep();
     }
 
     /**
