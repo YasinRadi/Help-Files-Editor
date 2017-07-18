@@ -1,5 +1,5 @@
 {
-  "name": "Help Files Editor",
+  "name": "SimpleUI",
   "version": "1.0.0",
   "description": "A simple Electron application for creating and editing help files.",
   "main": "app.js",
