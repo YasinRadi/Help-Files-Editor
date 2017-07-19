@@ -1,5 +1,5 @@
 /**
- * Created by Yasin Radi on 2017-06-29.
+ * Created by Yasin Radi <yasin.ben.hamman@gmail.com>
  */
 'use strict';
 
@@ -7,7 +7,6 @@ const fs = require('fs');
 const fc = require('./form_creator');
 let file_abs_path = '';
 let file_content  = {};
-let step_num = 0;
 
 class File_Handler {
 
@@ -20,7 +19,7 @@ class File_Handler {
      *  Retrieves a file's data given its path.
      *  @param file_path {String}
      */
-    openFile(file_path) {
+    static openFile(file_path) {
         let self = File_Handler;
         fs.readFile(file_path, 'utf-8', (err, data) => {
             if(err) {
@@ -54,11 +53,6 @@ class File_Handler {
                 fc.createDescField(tour._description);
 
                 /**
-                 * Step number tracking.
-                 */
-                step_num = tour.steps.length;
-
-                /**
                  * Form content generation using tour steps.
                  */
                 tour.steps.forEach((s, v) => {
@@ -84,7 +78,7 @@ class File_Handler {
     /**
      *  Creates a new file form.
      */
-    newFile() {
+    static newFile() {
         fc.createNewFile();
     }
 
@@ -99,7 +93,7 @@ class File_Handler {
     /**
      * Saves the file content into a new file overwriting the open one.
      */
-    save(is_new_file, path) {
+    static save(is_new_file, path) {
         let self = File_Handler;
         let json_content = JSON.stringify(self.createSavingObject(self), null, 4);
         if(is_new_file) {
@@ -159,7 +153,7 @@ class File_Handler {
     }
 
     /**
-     *  Given a file path return the file name using a regexp.
+     *  Given a file path return the file name using regexp.
      *  @param path {String}
      *  @return name {String}
      */

@@ -1,12 +1,12 @@
+/**
+ * Created by Yasin Radi <yasin.ben.hamman@gmail.com>
+ */
 'use strict';
 
 const {Menu, dialog} = require('electron').remote;
-const File_Handler = require('./file_handler');
+const fh   = require('./file_handler');
 const val  = require('./validator');
-const fh   = new File_Handler();
 const fs   = require('fs');
-const path = require('path');
-const url  = require('url');
 let is_file_open = false;
 let is_file_new  = false;
 
@@ -165,8 +165,6 @@ const menu = Menu.buildFromTemplate([
  */
 Menu.setApplicationMenu(menu);
 
-class Main_Menu {
-    contructor(){}
-}
+class Main_Menu {}
 
 module.exports = Main_Menu;

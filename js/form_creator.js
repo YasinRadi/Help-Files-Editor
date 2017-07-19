@@ -1,11 +1,13 @@
 /**
- * Created by Yasin Radi on 2017-07-04.
+ * Created by Yasin Radi <yasin.ben.hamman@gmail.com>
  */
 'use strict';
 
 const st   = require('./step_template');
 const form = document.getElementById('elementList');
 const IMG  = '../public/img/';
+const DSC  = 'Description';
+const FNM  = 'File name';
 
 class Form_Creator {
     constructor() {}
@@ -16,7 +18,7 @@ class Form_Creator {
      */
     static createFileNameField(name) {
         const file_name = document.getElementById('fileName');
-        file_name.innerHTML = `File name: ${name}`;
+        file_name.innerHTML = `${FNM}: ${name}`;
         file_name.className = 'nameTitle';
     }
 
@@ -26,7 +28,7 @@ class Form_Creator {
      */
     static createDescField(content) {
         const desc_field = document.getElementById('descField');
-        desc_field.textContent = 'Description:';
+        desc_field.textContent = `${DSC}:`;
         desc_field.className = 'form-group';
         const desc = document.createElement('input');
         desc.setAttribute('id', 'desc');
@@ -206,8 +208,7 @@ class Form_Creator {
      */
     static removeStepDiv() {
         const step_id = this.id.split('_')[1];
-        let sp = document.getElementById(`stepTitle_${step_id}`);
-        form.removeChild(sp);
+        form.removeChild(document.getElementById(`stepTitle_${step_id}`));
         form.removeChild(document.getElementById(`step_${step_id}`));
     }
 
@@ -228,7 +229,7 @@ class Form_Creator {
      * @returns {int}
      */
     static getStepNum() {
-        return form.querySelectorAll('div').length;
+        return form.querySelectorAll('div.step-div').length;
     }
 
     /**
