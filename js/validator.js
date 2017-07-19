@@ -1,5 +1,5 @@
 /**
- * Created by Yasin Radi on 2017-07-11.
+ * Created by Yasin Radi <yasin.ben.hamman@gmail.com>
  */
 const fh   = require('./File_Handler');
 const form = document.getElementById('elementList');
@@ -92,7 +92,7 @@ class Validator {
     }
 
     /**
-     * Checks if the file has the right extension.
+     * Checks if the file has tour extension.
      * @param path {String}
      * @returns {boolean}
      */

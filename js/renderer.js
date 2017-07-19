@@ -1,7 +1,7 @@
-// This file is required by the index.html file and will
-// be executed in the renderer process for that window.
-// All of the Node.js APIs are available in this process.
+/**
+ * Created by Yasin Radi <yasin.ben.hamman@gmail.com>
+ */
 'use strict';
 
-const mm = require('./main_menu');
-const fh = require('./file_handler');
+require('./main_menu');
+require('./file_handler');

@@ -1,5 +1,5 @@
 /**
- * Created by Yasin Radi on 2017-07-05.
+ * Created by Yasin Radi <yasin.ben.hamman@gmail.com>
  */
 
 const TEMPLATE = `<div class="form-group col-md-12 has-feedback">
@@ -73,6 +73,10 @@ const TEMPLATE = `<div class="form-group col-md-12 has-feedback">
 class Step_Template {
     constructor() {}
 
+    /**
+     * Default step template.
+     * @returns {string}
+     */
     static getStepTemplate() {
         return TEMPLATE;
     }
