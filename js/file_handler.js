@@ -59,7 +59,7 @@ class File_Handler {
                     fc.createStep(v);
                     Object.keys(s).map((k) => {
                         let node = {};
-                        if(s[k].length > 20) {
+                        if(s[k].length > 50) {
                             node = fc.createFormElement('textarea', k, s[k]);
                         } else {
                             node = fc.createFormElement('input', k, s[k]);
@@ -143,7 +143,13 @@ class File_Handler {
         steps.forEach((s, v) => {
             obj.steps.push({});
             s.querySelectorAll('input').forEach((i) => {
-                obj.steps[v][i.id] = i.value;
+                if(i.value === 'true') {
+                    obj.steps[v][i.id] = true;
+                } else if(i.value === 'false') {
+                    obj.steps[v][i.id] = false;
+                } else {
+                    obj.steps[v][i.id] = i.value;
+                }
             });
             s.querySelectorAll('textarea').forEach((t) => {
                 obj.steps[v][t.id] = self.removeNewLines(t.value);

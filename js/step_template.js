@@ -27,10 +27,6 @@ const TEMPLATE = `<div class="form-group col-md-12 has-feedback">
                     <input id="host" class="form-control" value="" size="30" />
                   </div>
                   <div class="form-group col-md-12 has-feedback">
-                    <label for="host" class="control-label">Host:</label>
-                    <input id="host" class="form-control" value="" size="30" />
-                  </div>
-                  <div class="form-group col-md-12 has-feedback">
                     <label for="animation" class="control-label">Animation:</label>
                     <input id="animation" class="form-control" value="" size="30" />
                   </div>
